@@ -1,0 +1,4 @@
+.build
+.serverless
+config.js
+node_modules

@@ -1,4 +1,4 @@
-service: template
+service: text-my-wife
 
 plugins:
   - serverless-offline
@@ -7,6 +7,7 @@ plugins:
 custom:
   serverless-offline:
     port: 8000
+  message-bucket: ${file(./config.js):serverless.MESSAGE_BUCKET_NAME}
 
 provider:
   name: aws
@@ -15,20 +16,40 @@ provider:
   memorySize: 128
   region: us-west-2
   environment:
-    NODE_ENV: 'staging'
+    NODE_ENV: 'production'
+    TEXT_KEY: ${file(./config.js):serverless.TEXT_KEY}
+    BUCKET_NAME: ${self:custom.message-bucket}
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action: 'logs:*'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action: 'cloudwatch:*'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action: 's3:*'
+      Resource: '*'
 
 package:
   include:
-    - config.*.js
+    - config.js
   exclude:
     - node_modules/.bin/**
-    - config.local.*
-    - config.*.local.*
+
 
 functions:
   index:
     handler: src/index.handler
+    name: text-my-wife
     events:
-      - http:
-          path: /
-          method: get
+      - schedule: cron(0 12 * * ? *)
+resources: # CloudFormation template syntax
+  Resources:
+    messageBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.message-bucket}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
