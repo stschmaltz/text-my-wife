@@ -1,11 +1,16 @@
-import AWS, { AWSError } from 'aws-sdk';
-import { PutObjectOutput, GetObjectOutput } from 'aws-sdk/clients/s3';
+import AWS, { AWSError } from "aws-sdk";
+import { PutObjectOutput, GetObjectOutput } from "aws-sdk/clients/s3";
 
 const s3 = new AWS.S3();
 
-const getFileNames = async (bucketName: string, limit?: number): Promise<string[]> => {
+const getFileNames = async (
+  bucketName: string,
+  limit?: number
+): Promise<string[]> => {
   if (!bucketName) {
-    throw new Error('Error: attempted to get file names without specifying a bucket');
+    throw new Error(
+      "Error: attempted to get file names without specifying a bucket"
+    );
   }
   const s3Files = await s3
     .listObjectsV2({
@@ -19,9 +24,12 @@ const getFileNames = async (bucketName: string, limit?: number): Promise<string[
     : [];
 };
 
-const getFile = (bucket: string, fileName: string): Promise<GetObjectOutput> => {
+const getFile = (
+  bucket: string,
+  fileName: string
+): Promise<GetObjectOutput> => {
   if (!bucket) {
-    throw new Error('Error: attempted to get file without specifying a bucket');
+    throw new Error("Error: attempted to get file without specifying a bucket");
   }
 
   return s3
@@ -31,11 +39,26 @@ const getFile = (bucket: string, fileName: string): Promise<GetObjectOutput> => 
     })
     .promise();
 };
-
-const uploadFile = (
-  fileContent: string,
+const deleteFile = (
   bucket: string,
   fileName: string
+): Promise<GetObjectOutput> => {
+  if (!bucket) {
+    throw new Error("Error: attempted to get file without specifying a bucket");
+  }
+
+  return s3
+    .deleteObject({
+      Bucket: bucket,
+      Key: fileName
+    })
+    .promise();
+};
+
+const uploadFile = (
+  bucket: string,
+  fileName: string,
+  fileContent: string
 ): Promise<PutObjectOutput | AWSError> =>
   s3
     .putObject({
@@ -45,4 +68,4 @@ const uploadFile = (
     })
     .promise();
 
-export { getFileNames, getFile, uploadFile };
+export { getFileNames, getFile, uploadFile, deleteFile };

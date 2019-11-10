@@ -8,6 +8,7 @@ custom:
   serverless-offline:
     port: 8000
   message-bucket: ${file(./config.js):serverless.MESSAGE_BUCKET_NAME}
+  sent-bucket: ${file(./config.js):serverless.SENT_BUCKET_NAME}
 
 provider:
   name: aws
@@ -18,7 +19,10 @@ provider:
   environment:
     NODE_ENV: 'production'
     TEXT_KEY: ${file(./config.js):serverless.TEXT_KEY}
-    BUCKET_NAME: ${self:custom.message-bucket}
+    TO_NUMBER: ${file(./config.js):serverless.TO_NUMBER}
+    ERROR_NUMBER: ${file(./config.js):serverless.ERROR_NUMBER}
+    MESSAGE_BUCKET_NAME: ${self:custom.message-bucket}
+    SENT_BUCKET_NAME: ${self:custom.sent-bucket}
   iamRoleStatements:
     - Effect: 'Allow'
       Action: 'logs:*'
@@ -42,13 +46,21 @@ functions:
     handler: src/index.handler
     name: text-my-wife
     events:
-      - schedule: cron(0 12 * * ? *)
+      - schedule: cron(0 4 * * ? *)
 resources: # CloudFormation template syntax
   Resources:
     messageBucket:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:custom.message-bucket}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+    sentBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.sent-bucket}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
