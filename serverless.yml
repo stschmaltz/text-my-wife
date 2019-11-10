@@ -45,6 +45,7 @@ functions:
   index:
     handler: src/index.handler
     name: text-my-wife
+    timeout: 60 
     events:
       - schedule: cron(0 4 * * ? *)
 resources: # CloudFormation template syntax
