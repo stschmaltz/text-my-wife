@@ -47,7 +47,7 @@ functions:
     name: text-my-wife
     timeout: 60 
     events:
-      - schedule: cron(0 4 * * ? *)
+      - schedule: cron(0 16 * * ? *)
 resources: # CloudFormation template syntax
   Resources:
     messageBucket:
