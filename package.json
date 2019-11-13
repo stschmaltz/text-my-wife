@@ -8,7 +8,7 @@
   "homepage": "https://github.com/neofinancial/neo-serverless",
   "repository": {
     "type": "git",
-    "url": "git@github.com:stschmaltz/text-my-wife.git",
+    "url": "git@github.com:stschmaltz/text-my-wife.git"
   },
   "engines": {
     "node": ">=10.15.0"

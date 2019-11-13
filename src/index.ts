@@ -60,6 +60,9 @@ const handler = async (): Promise<HandlerResult> => {
     };
   }
 
+  // Sending the message to myself as well to account for if the server provider filters the message
+  await sendText(file.Body.toString(), error_number);
+
   return {
     statusCode: 200,
     body: JSON.stringify({ message: "Successfully Sent Message!" })
