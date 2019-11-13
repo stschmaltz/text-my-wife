@@ -21,10 +21,10 @@
     "lint": "eslint \"**/*.{ts,js}\""
   },
   "dependencies": {
-    "@types/request": "^2.48.3",
-    "request": "^2.88.0"
+    "request": "~2.88.0"
   },
   "devDependencies": {
+    "@types/request": "^2.48.3",
     "@types/aws-lambda": "^8.10.34",
     "@types/node": "~12.12.6",
     "aws-sdk": "^2.551.0",
