@@ -9,6 +9,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: 'Get Previous tag'
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@master"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    - name: Build all
+      run: npm run build --since ${{ steps.previoustag.outputs.tag }}
+      if: github.ref == 'refs/heads/master'
     - name: Tag deploy
       uses: stschmaltz/github-tag-action@releases/v3
       if: github.ref == 'refs/heads/master'
