@@ -1,0 +1,18 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Tag deploy
+      uses: stschmaltz/github-tag-action@v3
+      if: github.ref == 'refs/heads/master'
+      with:
+        default_bump: major
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
