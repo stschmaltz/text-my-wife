@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Tag deploy
-      uses: stschmaltz/github-tag-action@v3
+      uses: stschmaltz/github-tag-action@releases/v3
       if: github.ref == 'refs/heads/master'
       with:
         default_bump: major
