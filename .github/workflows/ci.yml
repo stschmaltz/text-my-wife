@@ -21,6 +21,3 @@ jobs:
         default_bump: major
         github_token: ${{ secrets.GITHUB_TOKEN }}
         create_annotated_tag: true
-    - name: Build all
-      run: npm run build --since ${{ steps.previoustag.outputs.tag }}
-      if: github.ref == 'refs/heads/master'
