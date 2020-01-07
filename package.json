@@ -1,6 +1,6 @@
 {
-  "name": "template",
-  "description": "Serverless template",
+  "name": "text-my-wife",
+  "description": "Serverless app to text my wife daily",
   "version": "1.0.0",
   "author": "Shane Schmaltz <stschmaltz>",
   "license": "UNLICENSED",
