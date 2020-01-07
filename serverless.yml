@@ -1,7 +1,6 @@
 service: text-my-wife
 
 plugins:
-  - serverless-offline
   - serverless-plugin-typescript
 
 custom:
