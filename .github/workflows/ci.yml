@@ -15,7 +15,7 @@ jobs:
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
     - name: Tag deploy
-      uses: stschmaltz/github-tag-action@releases/v3
+      uses: stschmaltz/github-tag-action@v3
       if: github.ref == 'refs/heads/master'
       with:
         default_bump: major
