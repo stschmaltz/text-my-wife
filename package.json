@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "author": "Shane Schmaltz <stschmaltz>",
   "license": "UNLICENSED",
-  "private": true,
   "homepage": "https://github.com/neofinancial/neo-serverless",
   "repository": {
     "type": "git",
