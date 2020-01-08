@@ -20,4 +20,4 @@ jobs:
       with:
         default_bump: major
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        create_annotated_tag: true
+        create_annotated_tag: false
